@@ -1,60 +1,202 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="manifest" href="manifest.json">
-<link
-      rel="icon"
-      href="image.png"
-      type="image/png"
-    />
-    <title>Simulado - História do Bombeiro</title>
-<meta name="theme-color" content="#38bdf8">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="image.png" type="image/png" />
+  <title>Simulado - História do Bombeiro</title>
+  <meta name="theme-color" content="#38bdf8">
 
-<script>
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("sw.js")
-      .then(() => console.log("Service Worker registrado"))
-      .catch(err => console.error("SW erro:", err));
-  }
-</script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js")
+        .then(() => console.log("Service Worker registrado"))
+        .catch(err => console.error("SW erro:", err));
+    }
+  </script>
 
   <style>
-    :root{
-      --bg:#0f172a; --card:#0b1222f2; --muted:#94a3b8; --text:#e5e7eb; --accent:#38bdf8; --ok:#16a34a; --bad:#dc2626; --border:#334155;
+    :root {
+      --bg: #0f172a;
+      --card: #0b1222f2;
+      --muted: #94a3b8;
+      --text: #e5e7eb;
+      --accent: #38bdf8;
+      --ok: #16a34a;
+      --bad: #dc2626;
+      --border: #334155;
     }
-    *{box-sizing:border-box}
-    body{margin:0;background:radial-gradient(1200px 600px at 10% -10%,rgba(56,189,248,.15),transparent),
-                    radial-gradient(1000px 600px at 120% 20%,rgba(34,197,94,.12),transparent),var(--bg);
-         color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial}
-    .container{max-width:1100px;margin:24px auto;padding:0 16px}
-    header{display:flex;gap:16px;align-items:center;justify-content:space-between;margin-bottom:16px}
-    header h1{font-size:1.25rem;margin:0}
-    .card{background:var(--card);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
-    .panel{padding:16px}
-    .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-    .chip{background:#0b1328;border:1px solid var(--border);border-radius:999px;padding:6px 10px;font-size:.85rem;color:var(--muted)}
-    .btn{appearance:none;border:1px solid var(--border);background:#0a1222;color:var(--text);padding:10px 14px;border-radius:12px;cursor:pointer;transition:.2s;font-weight:700}
-    .btn:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,0,0,.35)}
-    .btn.primary{background:linear-gradient(135deg,#38bdf8,#34d399);border-color:transparent;color:#001018}
-    .q{padding:16px;border-top:1px dashed var(--border)}
-    .q-head{display:flex;justify-content:space-between;gap:12px;align-items:center}
-    .q-title{font-weight:700}
-    .q-body{margin-top:8px}
-    .alt{display:block;margin:.25rem 0;padding:.35rem .6rem;border:1px solid transparent;border-radius:10px;cursor:pointer}
-    .alt input{margin-right:.5rem}
-    .alt.sel{border-color:#1f2937;background:#0f1a33}
-    .status{margin-top:8px;font-size:.95rem}
-    .status.ok{color:var(--ok)}
-    .status.bad{color:var(--bad)}
-    .ok-bg{background:rgba(22,163,74,.12);border:1px solid rgba(22,163,74,.35)}
-    .bad-bg{background:rgba(220,38,38,.10);border:1px solid rgba(220,38,38,.35)}
-    .tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0 0}
-    .footer{margin:24px 0 40px;color:var(--muted);font-size:.9rem;text-align:center}
-    details{background:#0b1328;border:1px solid var(--border);border-radius:12px;padding:10px;margin:12px 0}
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(56, 189, 248, .15), transparent),
+        radial-gradient(1000px 600px at 120% 20%, rgba(34, 197, 94, .12), transparent), var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 24px auto;
+      padding: 0 16px
+    }
+
+    header {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px
+    }
+
+    header h1 {
+      font-size: 1.25rem;
+      margin: 0
+    }
+
+    .card {
+      background: var(--card);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .35)
+    }
+
+    .panel {
+      padding: 16px
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center
+    }
+
+    .chip {
+      background: #0b1328;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: .85rem;
+      color: var(--muted)
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #0a1222;
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: .2s;
+      font-weight: 700
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, .35)
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, #38bdf8, #34d399);
+      border-color: transparent;
+      color: #001018
+    }
+
+    .q {
+      padding: 16px;
+      border-top: 1px dashed var(--border)
+    }
+
+    .q-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center
+    }
+
+    .q-title {
+      font-weight: 700
+    }
+
+    .q-body {
+      margin-top: 8px
+    }
+
+    .alt {
+      display: block;
+      margin: .25rem 0;
+      padding: .35rem .6rem;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      cursor: pointer
+    }
+
+    .alt input {
+      margin-right: .5rem
+    }
+
+    .alt.sel {
+      border-color: #1f2937;
+      background: #0f1a33
+    }
+
+    .status {
+      margin-top: 8px;
+      font-size: .95rem
+    }
+
+    .status.ok {
+      color: var(--ok)
+    }
+
+    .status.bad {
+      color: var(--bad)
+    }
+
+    .ok-bg {
+      background: rgba(22, 163, 74, .12);
+      border: 1px solid rgba(22, 163, 74, .35)
+    }
+
+    .bad-bg {
+      background: rgba(220, 38, 38, .10);
+      border: 1px solid rgba(220, 38, 38, .35)
+    }
+
+    .tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin: 12px 0 0
+    }
+
+    .footer {
+      margin: 24px 0 40px;
+      color: var(--muted);
+      font-size: .9rem;
+      text-align: center
+    }
+
+    details {
+      background: #0b1328;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px;
+      margin: 12px 0
+    }
   </style>
 </head>
+
 <body>
   <div class="container">
     <header>
@@ -68,14 +210,15 @@
     <section id="exam" class="card panel">
       <div class="row" style="justify-content:space-between">
         <strong>Marque suas respostas e clique em <em>Verificar Tudo</em> ao final para obter o resultado.</strong>
-<details>
-      <summary>Como funciona</summary>
-      <ul>
-        <li>Responda as questões de múltipla escolha e as questões de verdadeiro/falso.</li>
-        <li>Ao verificar, a questão fica <b style="color: var(--ok);">verde</b> se correta, <b style="color: var(--bad);">vermelha</b> se incorreta e mostra a alternativa certa.</li>
-        <li>Você pode <b>exportar</b> um CSV com resultados.</li>
-      </ul>
-    </details>
+        <details>
+          <summary>Como funciona</summary>
+          <ul>
+            <li>Responda as questões de múltipla escolha e as questões de verdadeiro/falso.</li>
+            <li>Ao verificar, a questão fica <b style="color: var(--ok);">verde</b> se correta, <b
+                style="color: var(--bad);">vermelha</b> se incorreta e mostra a alternativa certa.</li>
+            <li>Você pode <b>exportar</b> um CSV com resultados.</li>
+          </ul>
+        </details>
         <div class="row">
           <button id="btnReset" class="btn">Resetar</button>
           <button id="btnExport" class="btn">Exportar CSV</button>
@@ -86,145 +229,347 @@
       <button id="btnCheckAll" class="btn primary">Verificar Tudo</button>
     </section>
 
-    
+
 
     <p class="footer">&copy; 2025 CFSd Hotel</p>
   </div>
 
   <script>
-    const questoes = [
-  { n: 1, enu: "Em que ano foi sancionada a lei que criou a Seção de Bombeiros em Minas Gerais?", alts: ["a) 1908", "b) 1911", "c) 1920", "d) 1934"], correta: "b (resposta em Aula 01 HB.pptx — criação/Lei 557 de 31/08/1911)" },
-  { n: 2, enu: "A Lei nº 557 (31 de agosto) referida no material diz respeito a:", alts: ["a) criação do 1ºBBM", "b) criação da Guarda Civil", "c) autorização para organizar uma seção de bombeiros", "d) criação da Academia de Bombeiros"], correta: "c (resposta em Aula 01 HB.pptx — explicação sobre Lei 557 e organização da secção)" },
-  { n: 3, enu: "O primeiro treinamento de integrantes mineiros no Rio de Janeiro ocorreu em:", alts: ["a) 1908", "b) 1910", "c) 1912", "d) 1915"], correta: "c (resposta em Aula 05 - HB.pptx — menção ao treinamento de 11 guardas civis em 1912)" },
-  { n: 4, enu: "Em 1931 foi criado:", alts: ["a) a Divisão Técnica", "b) o 1º Batalhão de Bombeiros (1ºBBM)", "c) o BOA (Batalhão de Operações Aéreas)", "d) o CIBOM"], correta: "b (resposta em Aula 01 HB.pptx — criação do 1ºBBM em 1931)" },
-  { n: 5, enu: "A desvinculação do Corpo de Bombeiros da Força Pública ocorreu por qual decreto/ano?", alts: ["a) Decreto-Lei 9.867/1931", "b) Decreto-Lei 4.234/1966", "c) Decreto nº 11.186/1934", "d) Emenda Constitucional 39/1999"], correta: "c (resposta em Aula 01 HB.pptx / Aula 02 HB.docx — Decreto nº 11.186/1934 desvinculação)" },
-  { n: 6, enu: "Na fase 1934–1966, o CBMMG esteve vinculado a qual órgão?", alts: ["a) Polícia Federal", "b) Secretaria de Interior", "c) Ministério da Defesa", "d) Prefeitura Municipal"], correta: "b (resposta em Aula 01 HB.pptx — vinculação à Secretaria de Interior após 1934)" },
-  { n: 7, enu: "Nas décadas iniciais, uma das principais dificuldades do serviço de bombeiros em MG era:", alts: ["a) excesso de pessoal", "b) abundância de água", "c) modernização das viaturas", "d) falta de estrutura logística e água"], correta: "d (resposta em Aula 01 HB.pptx — falta de água e logística nos primeiros anos)" },
-  { n: 8, enu: "A reintegração do CBMMG à PMMG aconteceu em:", alts: ["a) 1934", "b) 1970", "c) 25 de agosto de 1966", "d) 1999"], correta: "c (resposta em Aula 03 - HB.pdf / Aula 04 - HB.pptx — reintegração em 25/08/1966)" },
-  { n: 9, enu: "A Lei nº 4.234/1966 trata de:", alts: ["a) autonomia do CBMMG", "b) criação da ABM", "c) reintegração do Corpo de Bombeiros à Polícia Militar", "d) criação do BOA"], correta: "c (resposta em Aula 03 - HB.pdf — Lei nº 4.234/1966)" },
-  { n: 10, enu: "Durante o regime militar (década de 1960), os bombeiros chegaram a exercer:", alts: ["a) apenas salvamento aquático", "b) serviços de sentinela e apoio em situações de ordem pública", "c) exclusivamente atividades administrativas", "d) funções de controladoria financeira"], correta: "b (resposta em Aula 03 - HB.pdf — bombeiros como sentinela/apoio no regime militar)" },
-  { n: 11, enu: "A emancipação/autonomia do Corpo de Bombeiros de Minas Gerais foi formalizada em:", alts: ["a) 1931", "b) 1966", "c) 1999 (Emenda Constitucional/Emancipação)", "d) 2005"], correta: "c (resposta em Aula 04 - HB.pptx — emancipação/autonomia em 1999)" },
-  { n: 12, enu: "Um dos motivos políticos para a emancipação de 1999 foi:", alts: ["a) ampliação do efetivo feminino", "b) crise econômica de 1997", "c) a greve de 1997 e anistia dos expulsos", "d) inauguração do BOA"], correta: "c (resposta em Aula 04 - HB.pptx — greve de 1997 / anistia como contexto)" },
-  { n: 13, enu: "Depois de 1999, a corporação passou a:", alts: ["a) reduzir orçamento", "b) ampliar orçamento e renovar frota", "c) extinguir a Academia de Bombeiros", "d) voltar a ser seção da Força Pública"], correta: "b (resposta em Aula 04 - HB.pptx — aumento de orçamento e renovação da frota pós-1999)" },
-  { n: 14, enu: "Qual evento contribuiu para endurecer normas e fiscalização após 1999?", alts: ["a) inauguração de nova base aérea", "b) incêndio no Canecão Mineiro (2001)", "c) criação da Fundação SALVAR", "d) criação do CAT"], correta: "b (resposta em Aula 04 - HB.pptx — incêndio no Canecão citado como impulso a normas)" },
-  { n: 15, enu: "A criação do BOA (Batalhão de Operações Aéreas) no CBMMG foi regulada em que decreto (ano indicado nos slides)?", alts: ["a) 1999", "b) 2014", "c) 2006 (Decreto 44.411/2006)", "d) 2024"], correta: "c (resposta em Aula 07 - HB.pptx — criação do BOA, Decreto 44.411/2006)" },
-  { n: 16, enu: "O BEMAD é um batalhão voltado para:", alts: ["a) operações aéreas apenas", "b) combate contra incêndios urbanos exclusivamente", "c) emergências ambientais e resposta a desastres", "d) administração interna do CBMMG"], correta: "c (resposta em Aula 07 - HB.pptx — objetivo do BEMAD)" },
-  { n: 17, enu: "Qual foi uma das consequências da verticalização de BH nas décadas citadas?", alts: ["a) redução de incêndios", "b) necessidade de normas de prevenção e sistemas de combate em edificações", "c) diminuição da frota", "d) extinção da Divisão Técnica"], correta: "b (resposta em Aula 08 - HB.pptx — verticalização impulsionando prevenção)" },
-  { n: 18, enu: "A Lei Municipal nº 363/1930 abordou:", alts: ["a) organização do 1ºBBM", "b) cadastro de bombeiros voluntários", "c) regulamento geral de construções (medidas de prevenção)", "d) criação da ABM"], correta: "c (resposta em Aula 08 - HB.pptx — Lei Municipal nº 363/1930: regulamento construções)" },
-  { n: 19, enu: "Em 1940, o Decreto-Lei nº 84 alterou a Lei nº 363 de 1930 e teve qual efeito sobre o CBMMG?", alts: ["a) deu mais poder técnico ao CBMMG", "b) extinguiu o CBMMG", "c) retirou atribuição técnica específica ao Corpo de Bombeiros em indicar medidas", "d) criou o BOA"], correta: "c (resposta em Aula 08 - HB.pptx — Decreto-Lei nº 84/1940 removendo atribuição técnica)" },
-  { n: 20, enu: "A Divisão Técnica, criada após a reintegração, tinha como função principal:", alts: ["a) gerir transporte aéreo", "b) assessorar tecnicamente e fiscalizar projetos de construção", "c) coordenar esportes militares", "d) criar fundos de investimento"], correta: "b (resposta em Aula 08 - HB.pptx / Aula 02 HB.docx — Divisão Técnica: assistência e fiscalização)" },
-    { n: 21, enu: "As primeiras ITs (Instruções Técnicas) de Minas Gerais foram criadas em:", alts: ["a) 2000", "b) 2005", "c) 2010", "d) 2015"], correta: "b (resposta em Aula 08 - HB.pptx / slides sobre ITs 2005)" },
-  { n: 22, enu: "A CAT (Comissão de Análise Técnica) é responsável por:", alts: ["a) treinamento de novos bombeiros", "b) manutenção da frota", "c) emissão/renovação de AVCB e análise de projetos", "d) controle de orçamento"], correta: "c (resposta em Aula 08 - HB.pptx — CAT: emissão/renovação AVCB e análise de projetos)" },
-  { n: 23, enu: "O CIBOM teve seu ensino reativado após:", alts: ["a) 1931", "b) abandono prévio e retomada", "c) criação do BOA", "d) criação da ABM"], correta: "b (resposta em Aula 05 - HB.pptx — CIBOM e reativação do ensino)" },
-  { n: 24, enu: "A ABM centralizou cursos de bombeiros a partir de:", alts: ["a) 2005", "b) 2017", "c) 1999", "d) 2010"], correta: "b (resposta em Aula 05 - HB.pptx / slides sobre ABM centralizando cursos desde 2017)" },
-  { n: 25, enu: "A ampliação da participação feminina no CBMMG, sem distinção de gênero nos editais, ocorreu em:", alts: ["a) 1981", "b) 2014", "c) 2024", "d) 1999"], correta: "b (resposta em Aula 05 - HB.pptx — ampliação da participação feminina e editais 2024)" },
-  { n: 26, enu: "A Cia Feminina do CBMMG foi criada em:", alts: ["a) 1970", "b) 1981", "c) 1990", "d) 2000"], correta: "b (resposta em Aula 06 - HB.pptx — Cia Feminina/1981)" },
-  { n: 27, enu: "A complexificação do CBMMG levou à:", alts: ["a) redução de cursos", "b) criação de novas áreas e especialização", "c) fechamento da Divisão Técnica", "d) diminuição do efetivo"], correta: "b (resposta em Aula 07 - HB.pptx — complexificação = novas áreas e especialização)" },
-  { n: 28, enu: "Entre os cursos oferecidos pelo CBMMG estão:", alts: ["a) apenas combate a incêndio urbano", "b) Salvamento em Altura, Resgate Veicular, Produtos Perigosos", "c) cursos de pilotagem aérea apenas", "d) cursos administrativos apenas"], correta: "b (resposta em Aula 07 - HB.pptx — lista de cursos: Salvamento em Altura, etc.)" },
-  { n: 29, enu: "A Força Tarefa Previncêndio atua principalmente em:", alts: ["a) defesa civil urbana", "b) unidades de conservação", "c) treinamento de novos bombeiros", "d) transporte de cargas"], correta: "b (resposta em Aula 07 - HB.pptx — Força Tarefa Previncêndio foco Unidades de Conservação)" },
-  { n: 30, enu: "As primeiras 36 ITs foram publicadas em:", alts: ["a) 2000", "b) 2003", "c) 2005", "d) 2010"], correta: "c (resposta em Aula 08 - HB.pptx — portarias/2005 com primeiras 36 ITs)" },
-  { n: 31, enu: "O distintivo do CBMMG evoluiu até 2025 e sua referência está em:", alts: ["a) 1931", "b) 1966", "c) slides de 2025", "d) 1999"], correta: "c (resposta em Aula 04 - HB.pptx / slides sobre evolução do distintivo até 2025)" },
-  { n: 32, enu: "A Fundação SALVAR auxilia:", alts: ["a) em promoções de bombeiros", "b) captação de recursos para viaturas/aeronaves", "c) criação de cursos de especialização", "d) formação de pilotos"], correta: "b (resposta em Aula 04 - HB.pptx — SALVAR e captação para viaturas/aeronaves)" },
-  { n: 33, enu: "O aumento de normas e taxas após alguns incêndios foi motivado por:", alts: ["a) problemas administrativos", "b) incêndios e conversas que levaram à taxa/incorporação de normas", "c) fusão de batalhões", "d) criação de novo BOA"], correta: "b (resposta em Aula 04 - HB.pptx — incêndios e conversas que levaram à taxa/incorporação de normas)" },
-  { n: 34, enu: "Nos primeiros anos, as promoções eram feitas por:", alts: ["a) antiguidade", "b) merecimento", "c) sorteio", "d) concursos externos"], correta: "b (resposta em Aula 02 HB.docx — promoções por merecimento no início)" },
-  { n: 35, enu: "O ingresso no CFO inicialmente era restrito a:", alts: ["a) civis com ensino médio", "b) sargentos do CBMMG", "c) oficiais do BOA", "d) bombeiros voluntários"], correta: "b (resposta em Aula 02 HB.docx — ingresso no CFO inicialmente restrito a sargentos)" },
-  { n: 36, enu: "O 2º e 3º BBM foram criados:", alts: ["a) em 1931", "b) no processo de reintegração após 1966", "c) em 2000", "d) em 1999"], correta: "b (resposta em Aula 03 - HB.pdf — criação do 2º e 3º BBM no processo de reintegração)" },
-  { n: 37, enu: "Durante 1966–1976, houve:", alts: ["a) aumento de frota", "b) lacuna na documentação/fotos de comandantes", "c) expansão da ABM", "d) criação do BOA"], correta: "b (resposta em Aula 03 - HB.pdf — lacuna de 1966–1976 mencionada)" },
-  { n: 38, enu: "O livro “100 anos de história 1911–2011” é referência para:", alts: ["a) cursos do CBMMG", "b) bibliografia histórica da corporação", "c) criação do BOA", "d) Estatuto da ABM"], correta: "b (resposta em Aula 03 - HB.pdf / bibliografia — obra 1911–2011)" },
-  { n: 39, enu: "A descentralização dos cursos no interior e capital ocorreu para:", alts: ["a) reduzir custos", "b) permitir acesso em várias regiões", "c) eliminar a ABM", "d) treinar apenas oficiais"], correta: "b (resposta em Aula 05 - HB.pptx — cursos no interior e capital, descentralizados)" },
-  { n: 40, enu: "O CFC (Centro de Formação de Condutores) foi criado aproximadamente em:", alts: ["a) década de 1980", "b) década de 1970", "c) década de 1990", "d) 2005"], correta: "c (resposta em Aula 05 - HB.pptx — CFC criado por volta da década de 1990)" },
-  { n: 41, enu: "Durante a pandemia, os cursos foram:", alts: ["a) suspensos permanentemente", "b) totalmente cancelados", "c) mantidos com adaptações", "d) transferidos para o BOA"], correta: "c (resposta em Aula 05 - HB.pptx — cursos mantidos com adaptações durante pandemia)" },
-  { n: 42, enu: "A primeira Comandante-Geral oriunda exclusivamente da formação de bombeiro ocorreu em:", alts: ["a) 2000", "b) 2010", "c) 2025", "d) 1999"], correta: "c (resposta em Aula 04 - HB.pptx — referência a 2025 e primeira Comandante-Geral oriunda da formação exclusivamente de bombeiro)" },
-  { n: 43, enu: "O CBMMG possui presença em cerca de quantas cidades?", alts: ["a) 10", "b) 20", "c) 32", "d) 50"], correta: "c (resposta em Aula 04 - HB.pptx — presença em cerca de 32 cidades citada)" },
-  { n: 44, enu: "As ITs exigem:", alts: ["a) aprovação popular", "b) avaliação criteriosa", "c) autorização federal", "d) apenas cumprimento simbólico"], correta: "b (resposta em Aula 08 - HB.pptx — ITs exigem avaliação criteriosa)" },
-  { n: 45, enu: "O Decreto nº 44.924/2008 formalizou:", alts: ["a) BOA", "b) BEMAD", "c) CAT (Comissão de Análise Técnica)", "d) ABM"], correta: "c (resposta em Aula 08 - HB.pptx — Decreto nº 44.924/2008 formalizou CAT)" },
-  { n: 46, enu: "O Decreto 44.411/2006 refere-se a qual unidade?", alts: ["a) BEMAD", "b) CAT", "c) BOA", "d) CIBOM"], correta: "c (resposta em Aula 07 - HB.pptx — Decreto 44.411/2006 relacionado ao BOA)" },
-  { n: 47, enu: "O BOA trouxe como impacto principal:", alts: ["a) aumento de pessoal", "b) redução do tempo de resposta", "c) diminuição da frota", "d) maior burocracia"], correta: "b (resposta em Aula 07 - HB.pptx — BOA reduz tempo de resposta)" },
-  { n: 48, enu: "O BEMAD foi regulamentado pelas Resoluções:", alts: ["a) 500 e 501/2010", "b) 583 e 584/2014", "c) 600 e 601/2016", "d) 700/2020"], correta: "b (resposta em Aula 07 - HB.pptx — BEMAD, Resoluções 583 e 584/2014)" },
-  { n: 49, enu: "O CBMMG participa de ações internacionais de resgate vinculadas a:", alts: ["a) ONU/INSARAG", "b) NATO", "c) União Europeia", "d) OMS"], correta: "b (resposta em Aula 07 - HB.pptx — INSARAG/ONU citado)" },
-  { n: 50, enu: "Aquisições de equipamentos e materiais pelo CBMMG podem ocorrer via:", alts: ["a) importações privadas", "b) convênios DNIT/Secretarias", "c) doações internacionais", "d) crowdfunding"], correta: "b (resposta em Aula 07 - HB.pptx — aquisições via convênios DNIT/Secretarias etc.)" },
-  { n: 51, enu: "As ITs do CBMMG passaram por revisões contínuas nos últimos anos:", alts: ["a) Não foram revisadas", "b) Apenas algumas", "c) Mais de 90% revisadas nos últimos 3 anos", "d) Revisões apenas em 2005"], correta: "c (resposta em Aula 08 - HB.pptx — revisão contínua das ITs, mais de 90% revisadas nos últimos 3 anos conforme slides)" },
-  { n: 52, enu: "O Cine-Theatro Brasil foi citado como exemplo de prevenção em:", alts: ["a) 1932", "b) 1940", "c) 1950", "d) 1960"], correta: "b (resposta em Aula 08 - HB.pptx — Cine-Theatro Brasil em 1932)" },
-  { n: 53, enu: "A Lei Municipal 2.060/1972 condicionava o Habite-se a:", alts: ["a) autorização ambiental", "b) pagamento de impostos", "c) sistemas preventivos", "d) aprovação de engenheiros civis"], correta: "c (resposta em Aula 08 - HB.pptx — Lei Municipal 2.060/1972 e Habite-se vinculado a sistemas preventivos)" },
-  { n: 54, enu: "O Decreto Estadual nº 11.636/1969 vinculava a Divisão Técnica à:", alts: ["a) ABM", "b) CFO", "c) CIBOM", "d) BOA"], correta: "b (resposta em Aula 08 - HB.pptx — Decreto Estadual nº 11.636/1969 e Divisão Técnica)" },
-  { n: 55, enu: "O símbolo do CBMMG foi inspirado em:", alts: ["a) Corpo de Bombeiros do Rio de Janeiro", "b) Corpo de Bombeiros de São Paulo", "c) Corpo de Bombeiros Federal", "d) Corpo de Bombeiros Militar do Exército"], correta: "c (resposta em Aula 01 HB.pptx — símbolo inspirado no Corpo de Bombeiros do Rio de Janeiro)" },
-  { n: 56, enu: "O 1º Sargento João de Azevedo Teixeira foi enviado em:", alts: ["a) 1911", "b) 1915", "c) 1931", "d) 1940"], correta: "b (resposta em Aula 05 - HB.pptx — envio do 1º Sargento João de Azevedo Teixeira em 1915)" },
-  { n: 57, enu: "As “Escolas de Recrutas” foram definidas como:", alts: ["a) cursos de pilotagem", "b) momento/curso de formação inicial", "c) treinamento avançado", "d) cursos administrativos"], correta: "b (resposta em Aula 05 - HB.pptx — definição de “Escolas de Recrutas” como momento/curso)" },
-  { n: 58, enu: "A primeira turma PMESP em 1991 tem relação com:", alts: ["a) contexto internacional", "b) contexto nacional de formação de bombeiros", "c) criação do BOA", "d) fundação do CBMMG"], correta: "c (resposta em Aula 06 - HB.pptx — primeira turma PMESP em 1991, contexto nacional)" },
-  { n: 59, enu: "O conceito de “encostado” no ensino do CBMMG refere-se a:", alts: ["a) bombeiro temporário", "b) bombeiro em treinamento", "c) bombeiro afastado ou sem função ativa", "d) oficial de carreira"], correta: "b (resposta em Aula 05 - HB.pptx — conceito de “encostado” explicado)" },
-  { n: 60, enu: "A bibliografia “100 anos de história 1911–2011” é referência para:", alts: ["a) estatutos administrativos", "b) história do CBMMG", "c) normas de prevenção", "d) cursos de pilotagem"], correta: "b (resposta em Aula 03 - HB.pdf — bibliografia com “100 anos de história 1911–2011”)" },
-  { n: 61, enu: "O movimento de emancipação do CBMMG ocorreu em:", alts: ["a) 1997", "b) 1999", "c) 2000", "d) 2005"], correta: "b (resposta em Aula 04 - HB.pptx / Aula 03 - HB.pdf — movimento 1997 e emancipação 1999)" },
-  { n: 62, enu: "Após a emancipação, o orçamento aproximado do CBMMG passou a ser:", alts: ["a) 1 milhão", "b) 3 milhões", "c) 6 milhões", "d) 10 milhões"], correta: "c (resposta em Aula 04 - HB.pptx — orçamento aproximado aumentou para ~6 milhões após emancipação)" },
-  { n: 63, enu: "O BEMAD atua em:", alts: ["a) apenas combate a incêndio", "b) defesa civil e produtos perigosos", "c) cursos de pilotagem", "d) apenas treinamento administrativo"], correta: "b (resposta em Aula 07 - HB.pptx — atuação ampliada para defesa civil, produtos perigosos etc.)" },
-  { n: 64, enu: "A 3ª geração de pilotos do CBMMG foi citada em:", alts: ["a) 2005", "b) 2010", "c) 2016", "d) 2020"], correta: "b (resposta em Aula 07 - HB.pptx — gerações de pilotos, 3ª geração 2016 citada)" },
-  { n: 65, enu: "A responsabilidade ambiental no CBMMG levou à criação de:", alts: ["a) apenas cursos administrativos", "b) unidades especializadas e cursos de prevenção ambiental", "c) apenas fiscalização", "d) BEMAD apenas"], correta: "b (resposta em Aula 07 - HB.pptx — responsabilidade ambiental e unidades especializadas)" },
-  { n: 66, enu: "A Divisão de Ensino do CBMMG durou pouco e posteriormente:", alts: ["a) foi fortalecida", "b) perdeu estrutura", "c) se transformou em BOA", "d) criou novos cursos"], correta: "b (resposta em Aula 05 - HB.pptx — Divisão de Ensino durou pouco e posteriormente perdeu estrutura)" },
-  { n: 67, enu: "O CFC foi instalado na ABM em:", alts: ["a) 2010", "b) 2014", "c) 2017", "d) 2020"], correta: "b (resposta em Aula 05 - HB.pptx — CFC instalado na ABM em 2014)" },
-  { n: 68, enu: "Os editais de 2024 passaram a não distinguir gênero após:", alts: ["a) manifestação do STF", "b) criação do BOA", "c) fusão da ABM", "d) criação da Cia Feminina"], correta: "b (resposta em Aula 05 - HB.pptx — editais 2024 sem distinção de gênero após manifestação do STF)" },
-  { n: 69, enu: "Eventos esportivos e treinos têm como objetivo:", alts: ["a) apenas lazer", "b) formação e integração dos bombeiros", "c) arrecadação de fundos", "d) promoção da ABM"], correta: "b (resposta em Aula 05 - HB.pptx — eventos esportivos/treinos visam formação e integração)" },
-  { n: 70, enu: "A bibliografia citada nos arquivos do CBMMG é:", alts: ["a) limitada a decretos", "b) abrangente e histórica", "c) apenas manuais internos", "d) somente relatórios"], correta: "b (resposta em Aula 03 - HB.pdf / bibliografia citada nos arquivos)" },
-  { n: 71, enu: "A criação do 1º BBM em 1931 é:", alts: ["V", "F"], correta: "V — (A criação do 1ºBBM em 1931 é citada em Aula 01 HB.pptx)" },
-  { n: 72, enu: "O Decreto 11.186/1934 causou a reintegração imediata do CBMMG:", alts: ["V", "F"], correta: "F — (Decreto 11.186/1934 desvinculou; porém houve reintegração em 1966). Aula 01 / Aula 03" },
-  { n: 73, enu: "O treinamento de 11 guardas civis em 1912 foi citado:", alts: ["V", "F"], correta: "V — (Treinamento em 1912 citado em Aula 05 - HB.pptx)" },
-  { n: 74, enu: "A verticalização não impactou na necessidade de prevenção:", alts: ["V", "F"], correta: "F — (Verticalização teve grande impacto na necessidade de prevenção — Aula 08)" },
-  { n: 75, enu: "A reintegração ocorreu em 25/08/1966:", alts: ["V", "F"], correta: "V — (Reintegração em 25/08/1966 — Aula 03 / Aula 08)" },
-  { n: 76, enu: "A emancipação foi aprovada em 1999:", alts: ["V", "F"], correta: "V — (Emancipação aprovada em 1999 — Aula 04 / Aula 03)" },
-  { n: 77, enu: "Após 1999 não houve aumento do orçamento para viaturas/equipamentos:", alts: ["V", "F"], correta: "F — (Após 1999 houve aumento do orçamento para viaturas/equipamentos)" },
-  { n: 78, enu: "O BOA reduz o tempo de resposta:", alts: ["V", "F"], correta: "V — (BOA reduz tempo de resposta — Aula 07)" },
-  { n: 79, enu: "O CIBOM foi reativado após abandono:", alts: ["V", "F"], correta: "V — (CIBOM citado como reativado após abandono — Aula 05)" },
-  { n: 80, enu: "A Lei Municipal nº 2.060/1972 condicionava o Habite-se:", alts: ["V", "F"], correta: "V — (Lei Municipal nº 2.060/1972 condicionava Habite-se — Aula 08)" },
-  { n: 81, enu: "As ITs não foram revisadas:", alts: ["V", "F"], correta: "F — (As ITs foram revisadas; slides mencionam revisões recentes)" },
-  { n: 82, enu: "A CAT foi formalizada pelo Decreto nº 44.924/2008:", alts: ["V", "F"], correta: "V — (CAT vinculado à DAT por Decreto nº 44.924/2008 — Aula 08)" },
-  { n: 83, enu: "A participação feminina começou apenas após 2010:", alts: ["V", "F"], correta: "F — (Participação feminina começou antes de 2010; Cia Feminina em 1981 e turmas já em 1990s)" },
-  { n: 84, enu: "O BEMAD atua em produtos perigosos/desastres:", alts: ["V", "F"], correta: "V — (BEMAD atua em produtos perigosos/desastres — Aula 07)" },
-  { n: 85, enu: "Houve lacuna de fotos/comandantes em 1966–1976:", alts: ["V", "F"], correta: "V — (Lacuna de fotos/comandantes em 1966–1976 mencionada — Aula 03)" },
-  { n: 86, enu: "A Fundação SALVAR auxilia na captação de recursos:", alts: ["V", "F"], correta: "V — (Fundação SALVAR auxilia na captação de recursos — Aula 04)" },
-  { n: 87, enu: "A ABM centralizou cursos a partir de 2017:", alts: ["V", "F"], correta: "V — (ABM centralizou cursos a partir de 2017 — Aula 05)" },
-  { n: 88, enu: "O Decreto 44.411/2006 está relacionado ao BOA:", alts: ["V", "F"], correta: "V — (Decreto 44.411/2006 relacionado ao BOA — Aula 07)" },
-  { n: 89, enu: "As turmas de CFSd só ocorreram após 2010:", alts: ["V", "F"], correta: "F — (Houve turmas de CFSd em várias décadas; não é exclusivo após 2010 — Aula 05)" },
-  { n: 90, enu: "O conceito de “encostado” está definido nos slides do ensino:", alts: ["V", "F"], correta: "V — (Definição de “encostado” nos slides do ensino — Aula 05)" },
-  { n: 91, enu: "Promoções ocorriam principalmente por antiguidade nas primeiras décadas:", alts: ["V", "F"], correta: "F — (Slides dizem que promoções ocorriam principalmente por merecimento nas primeiras décadas)" },
-  { n: 92, enu: "Andraus e Joelma influenciaram mudanças na prevenção no país:", alts: ["V", "F"], correta: "V — (Andraus e Joelma citados como influentes na mudança de prevenção no país — Aula 08)" },
-  { n: 93, enu: "As ITs tratam apenas de segurança administrativa:", alts: ["V", "F"], correta: "F — (ITs tratam de segurança técnica, projeto, vistorias — Aula 08)" },
-  { n: 94, enu: "A bibliografia inclui “100 anos de história e reflexão 1911–2011”:", alts: ["V", "F"], correta: "V — (Bibliografia inclui “100 anos de história e reflexão 1911–2011” — Aula 03)" },
-  { n: 95, enu: "O CBMMG não participa de defesa civil:", alts: ["V", "F"], correta: "F — (CBMMG participa de defesa civil segundo o material — Aula 07)" },
-  { n: 96, enu: "A fusão da Diretoria de Ensino com a ABM ocorreu por volta de 2015:", alts: ["V", "F"], correta: "V — (Fusão Diretoria de Ensino com ABM citada por volta de 2015 — Aula 05)" },
-  { n: 97, enu: "BEMAD e BOA refletem a complexificação do CBMMG:", alts: ["V", "F"], correta: "V — (BEMAD/BOA são reflexos da complexificação — Aula 07)" },
-  { n: 98, enu: "O discurso de responsabilidade ambiental cresceu no CBMMG:", alts: ["V", "F"], correta: "V — (Crescimento do discurso de responsabilidade ambiental mencionado — Aula 07)" },
-  { n: 99, enu: "Inicialmente, apenas 5 ITs foram aprovadas em 2005:", alts: ["V", "F"], correta: "F — (Slides mencionam 36 ITs aprovadas inicialmente em 2005, não 5)" },
-  { n: 100, enu: "Tragédias como Caraça e Edifício Guanabara impulsionaram a prevenção:", alts: ["V", "F"], correta: "V — (Tragédias como Caraça e Edifício Guanabara citadas como impulsionadoras da prevenção — Aula 08)" }
+    const questoes =
+      [
+        {
+          n: 1, enu: "Em que ano foi sancionada a lei que criou a Seção de Bombeiros em Minas Gerais?", alts: ["1908", "1911", "1920", "1934"], correta: "b"
+        },
+        {
+          n: 2, enu: "A Lei nº 557 (31 de agosto) referida no material diz respeito a:", alts: ["criação do 1ºBBM", "criação da Guarda Civil", "autorização para organizar uma seção de bombeiros", "criação da Academia de Bombeiros"], correta: "c"
+        },
+        {
+          n: 3, enu: "O primeiro treinamento de integrantes mineiros no Rio de Janeiro ocorreu em:", alts: ["1908", "1910", "1912", "1915"], correta: "c"
+        },
+        {
+          n: 4, enu: "Em 1931 foi criado:", alts: ["a Divisão Técnica", "o 1º Batalhão de Bombeiros (1ºBBM)", "o BOA (Batalhão de Operações Aéreas)", "o CIBOM"], correta: "b"
+        },
+        {
+          n: 5, enu: "A desvinculação do Corpo de Bombeiros da Força Pública ocorreu por qual decreto/ano?", alts: ["Decreto-Lei 9.867/1931", "Decreto-Lei 4.234/1966", "Decreto nº 11.186/1934", "Emenda Constitucional 39/1999"], correta: "c"
+        },
+        {
+          n: 6, enu: "Na fase 1934–1966, o CBMMG esteve vinculado a qual órgão?", alts: ["Polícia Federal", "Secretaria de Interior", "Ministério da Defesa", "Prefeitura Municipal"], correta: "b"
+        },
+        {
+          n: 7, enu: "Nas décadas iniciais, uma das principais dificuldades do serviço de bombeiros em MG era:", alts: ["excesso de pessoal", "abundância de água", "modernização das viaturas", "falta de estrutura logística e água"], correta: "d"
+        },
+        {
+          n: 8, enu: "A reintegração do CBMMG à PMMG aconteceu em:", alts: ["1934", "1970", "25 de agosto de 1966", "1999"], correta: "c"
+        },
+        {
+          n: 9, enu: "A Lei nº 4.234/1966 trata de:", alts: ["autonomia do CBMMG", "criação da ABM", "reintegração do Corpo de Bombeiros à Polícia Militar", "criação do BOA"], correta: "c"
+        },
+        {
+          n: 10, enu: "Durante o regime militar (década de 1960), os bombeiros chegaram a exercer:", alts: ["apenas salvamento aquático", "serviços de sentinela e apoio em situações de ordem pública", "exclusivamente atividades administrativas", "funções de controladoria financeira"], correta: "b"
+        },
+        {
+          n: 11, enu: "A emancipação/autonomia do Corpo de Bombeiros de Minas Gerais foi formalizada em:", alts: ["1931", "1966", "1999 (Emenda Constitucional/Emancipação)", "2005"], correta: "c"
+        },
+        {
+          n: 12, enu: "Um dos motivos políticos para a emancipação de 1999 foi:", alts: ["ampliação do efetivo feminino", "crise econômica de 1997", "a greve de 1997 e anistia dos expulsos", "inauguração do BOA"], correta: "c"
+        },
+        {
+          n: 13, enu: "Depois de 1999, a corporação passou a:", alts: ["reduzir orçamento", "ampliar orçamento e renovar frota", "extinguir a Academia de Bombeiros", "voltar a ser seção da Força Pública"], correta: "b"
+        },
+        {
+          n: 14, enu: "Qual evento contribuiu para endurecer normas e fiscalização após 1999?", alts: ["inauguração de nova base aérea", "incêndio no Canecão Mineiro (2001)", "criação da Fundação SALVAR", "criação do CAT"], correta: "b"
+        },
+        {
+          n: 15, enu: "A criação do BOA (Batalhão de Operações Aéreas) no CBMMG foi regulada em que decreto (ano indicado nos slides)?", alts: ["1999", "2014", "2006 (Decreto 44.411/2006)", "2024"], correta: "c"
+        },
+        {
+          n: 16, enu: "O BEMAD é um batalhão voltado para:", alts: ["operações aéreas apenas", "combate contra incêndios urbanos exclusivamente", "emergências ambientais e resposta a desastres", "administração interna do CBMMG"], correta: "c"
+        },
+        {
+          n: 17, enu: "Qual foi uma das consequências da verticalização de BH nas décadas citadas?", alts: ["redução de incêndios", "necessidade de normas de prevenção e sistemas de combate em edificações", "diminuição da frota", "extinção da Divisão Técnica"], correta: "b"
+        },
+        {
+          n: 18, enu: "A Lei Municipal nº 363/1930 abordou:", alts: ["organização do 1ºBBM", "cadastro de bombeiros voluntários", "regulamento geral de construções (medidas de prevenção)", "criação da ABM"], correta: "c"
+        },
+        {
+          n: 19, enu: "Em 1940, o Decreto-Lei nº 84 alterou a Lei nº 363 de 1930 e teve qual efeito sobre o CBMMG?", alts: ["deu mais poder técnico ao CBMMG", "extinguiu o CBMMG", "retirou atribuição técnica específica ao Corpo de Bombeiros em indicar medidas", "criou o BOA"], correta: "c"
+        },
+        {
+          n: 20, enu: "A Divisão Técnica, criada após a reintegração, tinha como função principal:", alts: ["gerir transporte aéreo", "assessorar tecnicamente e fiscalizar projetos de construção", "coordenar esportes militares", "criar fundos de investimento"], correta: "b"
+        },
 
-];
+        {
+          n: 21, enu: "As primeiras ITs (Instruções Técnicas) de Minas Gerais foram criadas em:", alts: ["2000", "2005", "2010", "2015"], correta: "b"
+        },
+        {
+          n: 22, enu: "A CAT (Comissão de Análise Técnicé responsável por:", alts: ["treinamento de novos bombeiros", "manutenção da frota", "emissão/renovação de AVCB e análise de projetos", "controle de orçamento"], correta: "c"
+        },
+        {
+          n: 23, enu: "O CIBOM teve seu ensino reativado após:", alts: ["1931", "abandono prévio e retomada", "criação do BOA", "criação da ABM"], correta: "b"
+        },
+        {
+          n: 24, enu: "A ABM centralizou cursos de bombeiros a partir de:", alts: ["2005", "2017", "1999", "2010"], correta: "b"
+        },
+        {
+          n: 25, enu: "A ampliação da participação feminina no CBMMG, sem distinção de gênero nos editais, ocorreu em:", alts: ["1981", "2014", "2024", "1999"], correta: "b"
+        },
+        {
+          n: 26, enu: "A Cia Feminina do CBMMG foi criada em:", alts: ["1970", "1981", "1990", "2000"], correta: "b"
+        },
+        {
+          n: 27, enu: "A complexificação do CBMMG levou à:", alts: ["redução de cursos", "criação de novas áreas e especialização", "fechamento da Divisão Técnica", "diminuição do efetivo"], correta: "b"
+        },
+        {
+          n: 28, enu: "Entre os cursos oferecidos pelo CBMMG estão:", alts: ["apenas combate a incêndio urbano", "Salvamento em Altura, Resgate Veicular, Produtos Perigosos", "cursos de pilotagem aérea apenas", "cursos administrativos apenas"], correta: "b"
+        },
+        {
+          n: 29, enu: "A Força Tarefa Previncêndio atua principalmente em:", alts: ["defesa civil urbana", "unidades de conservação", "treinamento de novos bombeiros", "transporte de cargas"], correta: "b"
+        },
+        {
+          n: 30, enu: "As primeiras 36 ITs foram publicadas em:", alts: ["2000", "2003", "2005", "2010"], correta: "c"
+        },
+        {
+          n: 31, enu: "O distintivo do CBMMG evoluiu até 2025 e sua referência está em:", alts: ["1931", "1966", "slides de 2025", "1999"], correta: "c"
+        },
+        {
+          n: 32, enu: "A Fundação SALVAR auxilia:", alts: ["em promoções de bombeiros", "captação de recursos para viaturas/aeronaves", "criação de cursos de especialização", "formação de pilotos"], correta: "b"
+        },
+        {
+          n: 33, enu: "O aumento de normas e taxas após alguns incêndios foi motivado por:", alts: ["problemas administrativos", "incêndios e conversas que levaram à taxa/incorporação de normas", "fusão de batalhões", "criação de novo BOA"], correta: "b"
+        },
+        {
+          n: 34, enu: "Nos primeiros anos, as promoções eram feitas por:", alts: ["antiguidade", "merecimento", "sorteio", "concursos externos"], correta: "b"
+        },
+        {
+          n: 35, enu: "O ingresso no CFO inicialmente era restrito a:", alts: ["civis com ensino médio", "sargentos do CBMMG", "oficiais do BOA", "bombeiros voluntários"], correta: "b"
+        },
+        {
+          n: 36, enu: "O 2º e 3º BBM foram criados:", alts: ["em 1931", "no processo de reintegração após 1966", "em 2000", "em 1999"], correta: "b"
+        },
+        {
+          n: 37, enu: "Durante 1966–1976, houve:", alts: ["aumento de frota", "lacuna na documentação/fotos de comandantes", "expansão da ABM", "criação do BOA"], correta: "b"
+        },
+        {
+          n: 38, enu: "O livro “100 anos de história 1911–2011” é referência para:", alts: ["cursos do CBMMG", "bibliografia histórica da corporação", "criação do BOA", "Estatuto da ABM"], correta: "b"
+        },
+        {
+          n: 39, enu: "A descentralização dos cursos no interior e capital ocorreu para:", alts: ["reduzir custos", "permitir acesso em várias regiões", "eliminar a ABM", "treinar apenas oficiais"], correta: "b"
+        },
+        {
+          n: 40, enu: "O CFC (Centro de Formação de Condutores) foi criado aproximadamente em:", alts: ["década de 1980", "década de 1970", "década de 1990", "2005"], correta: "c"
+        },
+        {
+          n: 41, enu: "Durante a pandemia, os cursos foram:", alts: ["suspensos permanentemente", "totalmente cancelados", "mantidos com adaptações", "transferidos para o BOA"], correta: "c"
+        },
+        {
+          n: 42, enu: "A primeira Comandante-Geral oriunda exclusivamente da formação de bombeiro ocorreu em:", alts: ["2000", "2010", "2025", "1999"], correta: "c"
+        },
+        {
+          n: 43, enu: "O CBMMG possui presença em cerca de quantas cidades?", alts: ["10", "20", "32", "50"], correta: "c"
+        },
+        {
+          n: 44, enu: "As ITs exigem:", alts: ["aprovação popular", "avaliação criteriosa", "autorização federal", "apenas cumprimento simbólico"], correta: "b"
+        },
+        {
+          n: 45, enu: "O Decreto nº 44.924/2008 formalizou:", alts: ["BOA", "BEMAD", "CAT (Comissão de Análise Técnica)", "ABM"], correta: "c"
+        },
+        {
+          n: 46, enu: "O Decreto 44.411/2006 refere-se a qual unidade?", alts: ["BEMAD", "CAT", "BOA", "CIBOM"], correta: "c"
+        },
+        {
+          n: 47, enu: "O BOA trouxe como impacto principal:", alts: ["aumento de pessoal", "redução do tempo de resposta", "diminuição da frota", "maior burocracia"], correta: "b"
+        },
+        {
+          n: 48, enu: "O BEMAD foi regulamentado pelas Resoluções:", alts: ["500 e 501/2010", "583 e 584/2014", "600 e 601/2016", "700/2020"], correta: "b"
+        },
+        {
+          n: 49, enu: "O CBMMG participa de ações internacionais de resgate vinculadas a:", alts: ["ONU/INSARAG", "NATO", "União Europeia", "OMS"], correta: "b"
+        },
+        {
+          n: 50, enu: "Aquisições de equipamentos e materiais pelo CBMMG podem ocorrer via:", alts: ["importações privadas", "convênios DNIT/Secretarias", "doações internacionais", "crowdfunding"], correta: "b"
+        },
+        {
+          n: 51, enu: "As ITs do CBMMG passaram por revisões contínuas nos últimos anos:", alts: ["Não foram revisadas", "Apenas algumas", "Mais de 90% revisadas nos últimos 3 anos", "Revisões apenas em 2005"], correta: "c"
+        },
+        {
+          n: 52, enu: "O Cine-Theatro Brasil foi citado como exemplo de prevenção em:", alts: ["1932", "1940", "1950", "1960"], correta: "b"
+        },
+        {
+          n: 53, enu: "A Lei Municipal 2.060/1972 condicionava o Habite-se a:", alts: ["autorização ambiental", "pagamento de impostos", "sistemas preventivos", "aprovação de engenheiros civis"], correta: "c"
+        },
+        {
+          n: 54, enu: "O Decreto Estadual nº 11.636/1969 vinculava a Divisão Técnica à:", alts: ["ABM", "CFO", "CIBOM", "BOA"], correta: "b"
+        },
+        {
+          n: 55, enu: "O símbolo do CBMMG foi inspirado em:", alts: ["Corpo de Bombeiros do Rio de Janeiro", "Corpo de Bombeiros de São Paulo", "Corpo de Bombeiros Federal", "Corpo de Bombeiros Militar do Exército"], correta: "c"
+        },
+        {
+          n: 56, enu: "O 1º Sargento João de Azevedo Teixeira foi enviado em:", alts: ["1911", "1915", "1931", "1940"], correta: "b"
+        },
+        {
+          n: 57, enu: "As “Escolas de Recrutas” foram definidas como:", alts: ["cursos de pilotagem", "momento/curso de formação inicial", "treinamento avançado", "cursos administrativos"], correta: "b"
+        },
+        {
+          n: 58, enu: "A primeira turma PMESP em 1991 tem relação com:", alts: ["contexto internacional", "contexto nacional de formação de bombeiros", "criação do BOA", "fundação do CBMMG"], correta: "c"
+        },
+        {
+          n: 59, enu: "O conceito de “encostado” no ensino do CBMMG refere-se a:", alts: ["bombeiro temporário", "bombeiro em treinamento", "bombeiro afastado ou sem função ativa", "oficial de carreira"], correta: "b"
+        },
+        {
+          n: 60, enu: "A bibliografia “100 anos de história 1911–2011” é referência para:", alts: ["estatutos administrativos", "história do CBMMG", "normas de prevenção", "cursos de pilotagem"], correta: "b"
+        },
+        {
+          n: 61, enu: "O movimento de emancipação do CBMMG ocorreu em:", alts: ["1997", "1999", "2000", "2005"], correta: "b"
+        },
+        {
+          n: 62, enu: "Após a emancipação, o orçamento aproximado do CBMMG passou a ser:", alts: ["1 milhão", "3 milhões", "6 milhões", "10 milhões"], correta: "c"
+        },
+        {
+          n: 63, enu: "O BEMAD atua em:", alts: ["apenas combate a incêndio", "defesa civil e produtos perigosos", "cursos de pilotagem", "apenas treinamento administrativo"], correta: "b"
+        },
+        {
+          n: 64, enu: "A 3ª geração de pilotos do CBMMG foi citada em:", alts: ["2005", "2010", "2016", "2020"], correta: "b"
+        },
+        {
+          n: 65, enu: "A responsabilidade ambiental no CBMMG levou à criação de:", alts: ["apenas cursos administrativos", "unidades especializadas e cursos de prevenção ambiental", "apenas fiscalização", "BEMAD apenas"], correta: "b"
+        },
+        {
+          n: 66, enu: "A Divisão de Ensino do CBMMG durou pouco e posteriormente:", alts: ["foi fortalecida", "perdeu estrutura", "se transformou em BOA", "criou novos cursos"], correta: "b"
+        },
+        {
+          n: 67, enu: "O CFC foi instalado na ABM em:", alts: ["2010", "2014", "2017", "2020"], correta: "b"
+        },
+        {
+          n: 68, enu: "Os editais de 2024 passaram a não distinguir gênero após:", alts: ["manifestação do STF", "criação do BOA", "fusão da ABM", "criação da Cia Feminina"], correta: "b"
+        },
+        {
+          n: 69, enu: "Eventos esportivos e treinos têm como objetivo:", alts: ["apenas lazer", "formação e integração dos bombeiros", "arrecadação de fundos", "promoção da ABM"], correta: "b"
+        },
+        {
+          n: 70, enu: "A bibliografia citada nos arquivos do CBMMG é:", alts: ["limitada a decretos", "abrangente e histórica", "apenas manuais internos", "somente relatórios"], correta: "b"
+        },
+        {
+          n: 71, enu: "A criação do 1º BBM em 1931 é:", alts: ["V", "F"], correta: "V"
+        },
+        {
+          n: 72, enu: "O Decreto 11.186/1934 causou a reintegração imediata do CBMMG:", alts: ["V", "F"], correta: "F"
+        },
+        {
+          n: 73, enu: "O treinamento de 11 guardas civis em 1912 foi citado:", alts: ["V", "F"], correta: "V"
+        },
+        {
+          n: 74, enu: "A verticalização não impactou na necessidade de prevenção:", alts: ["V", "F"], correta: "F"
+        },
+        {
+          n: 75, enu: "A reintegração ocorreu em 25/08/1966:", alts: ["V", "F"], correta: "V"
+        },
+        {
+          n: 76, enu: "A emancipação foi aprovada em 1999:", alts: ["V", "F"], correta: "V"
+        },
+        {
+          n: 77, enu: "Após 1999 não houve aumento do orçamento para viaturas/equipamentos:", alts: ["V", "F"], correta: "F"
+        },
+        {
+          n: 78, enu: "O BOA reduz o tempo de resposta:", alts: ["V", "F"], correta: "V"
+        },
+        {
+          n: 79, enu: "O CIBOM foi reativado após abandono:", alts: ["V", "F"], correta: "V"
+        },
+        {
+          n: 80, enu: "A Lei Municipal nº 2.060/1972 condicionava o Habite-se:", alts: ["V", "F"], correta: "V"
+        },
+        {
+          n: 81, enu: "As ITs não foram revisadas:", alts: ["V", "F"], correta: "F"
+        },
+        {
+          n: 82, enu: "A CAT foi formalizada pelo Decreto nº 44.924/2008:", alts: ["V", "F"], correta: "V"
+        },
+        {
+          n: 83, enu: "A participação feminina começou apenas após 2010:", alts: ["V", "F"], correta: "F"
+        },
+        {
+          n: 84, enu: "O BEMAD atua em produtos perigosos/desastres:", alts: ["V", "F"], correta: "V"
+        },
+        {
+          n: 85, enu: "Houve lacuna de fotos/comandantes em 1966–1976:", alts: ["V", "F"], correta: "V"
+        },
+        {
+          n: 86, enu: "A Fundação SALVAR auxilia na captação de recursos:", alts: ["V", "F"], correta: "V"
+        },
+        {
+          n: 87, enu: "A ABM centralizou cursos a partir de 2017:", alts: ["V", "F"], correta: "V"
+        },
+        {
+          n: 88, enu: "O Decreto 44.411/2006 está relacionado ao BOA:", alts: ["V", "F"], correta: "V"
+        },
+        {
+          n: 89, enu: "As turmas de CFSd só ocorreram após 2010:", alts: ["V", "F"], correta: "F"
+        },
+        {
+          n: 90, enu: "O conceito de “encostado” está definido nos slides do ensino:", alts: ["V", "F"], correta: "V"
+        },
+        {
+          n: 91, enu: "Promoções ocorriam principalmente por antiguidade nas primeiras décadas:", alts: ["V", "F"], correta: "F"
+        },
+        {
+          n: 92, enu: "Andraus e Joelma influenciaram mudanças na prevenção no país:", alts: ["V", "F"], correta: "V"
+        },
+        {
+          n: 93, enu: "As ITs tratam apenas de segurança administrativa:", alts: ["V", "F"], correta: "F"
+        },
+        {
+          n: 94, enu: "A bibliografia inclui “100 anos de história e reflexão 1911–2011”:", alts: ["V", "F"], correta: "V"
+        },
+        {
+          n: 95, enu: "O CBMMG não participa de defesa civil:", alts: ["V", "F"], correta: "F"
+        },
+        {
+          n: 96, enu: "A fusão da Diretoria de Ensino com a ABM ocorreu por volta de 2015:", alts: ["V", "F"], correta: "V"
+        },
+        {
+          n: 97, enu: "BEMAD e BOA refletem a complexificação do CBMMG:", alts: ["V", "F"], correta: "V"
+        },
+        {
+          n: 98, enu: "O discurso de responsabilidade ambiental cresceu no CBMMG:", alts: ["V", "F"], correta: "V"
+        },
+        {
+          n: 99, enu: "Inicialmente, apenas 5 ITs foram aprovadas em 2005:", alts: ["V", "F"], correta: "F"
+        },
+        {
+          n: 100, enu: "Tragédias como Caraça e Edifício Guanabara impulsionaram a prevenção:", alts: ["V", "F"], correta: "V"        //  — (Tragédias como Caraça e Edifício Guanabara citadas como impulsionadoras da prevenção — Aula 08)" 
+        }
+
+      ];
 
     const lista = document.getElementById('lista');
 
-    function render(){
+    function render() {
       lista.innerHTML = '';
-      for(const q of questoes){
+      for (const q of questoes) {
         const div = document.createElement('div');
         div.className = 'q';
         div.id = `q${q.n}`;
         div.innerHTML = `
           <div class="q-head">
             <div class="q-title"><span class="chip">${q.n}</span> ${q.enu}</div>
+            <button class="btn" data-action="verificar">Verificar</button>
             
           </div>
           <div class="q-body" role="group" aria-label="Questão ${q.n}"></div>
           <div class="status"></div>
         `;
 
-        // <button class="btn" data-action="verificar">Verificar</button>
         const body = div.querySelector('.q-body');
-        if(q.vf){
-          ['V','F'].forEach(val=>{
+        if (q.vf) {
+          ['V', 'F'].forEach(val => {
             const label = document.createElement('label');
             label.className = 'alt';
             label.innerHTML = `<input type="radio" name="q${q.n}" value="${val}"> ${val}`;
             body.appendChild(label);
           });
-        }else{
-          const letras = ['a','b','c','d'];
-          q.alts.forEach((txt,idx)=>{
+        } else {
+          const letras = ['a', 'b', 'c', 'd'];
+          q.alts.forEach((txt, idx) => {
             const letra = letras[idx];
             const label = document.createElement('label');
             label.className = 'alt';
@@ -235,46 +580,46 @@
         lista.appendChild(div);
       }
 
-      lista.addEventListener('change', e=>{
+      lista.addEventListener('change', e => {
         const lab = e.target?.closest?.('.alt');
-        if(lab){
+        if (lab) {
           const group = lab.parentElement;
-          group.querySelectorAll('.alt').forEach(x=>x.classList.remove('sel'));
+          group.querySelectorAll('.alt').forEach(x => x.classList.remove('sel'));
           lab.classList.add('sel');
         }
       });
 
-      lista.addEventListener('click', e=>{
+      lista.addEventListener('click', e => {
         const btn = e.target.closest('button[data-action="verificar"]');
-        if(!btn) return;
+        if (!btn) return;
         const card = btn.closest('.q');
-        const n = Number(card.id.replace('q',''));
+        const n = Number(card.id.replace('q', ''));
         verificar(n);
         atualizarPlacar();
       });
     }
 
-    function verificar(n){
-      const q = questoes.find(x=>x.n===n);
+    function verificar(n) {
+      const q = questoes.find(x => x.n === n);
       const card = document.getElementById(`q${n}`);
       const status = card.querySelector('.status');
       const marcada = card.querySelector('input:checked');
-      card.classList.remove('ok-bg','bad-bg');
+      card.classList.remove('ok-bg', 'bad-bg');
       status.className = 'status';
-      if(!marcada){ status.textContent = 'Não respondida.'; return false; }
+      if (!marcada) { status.textContent = 'Não respondida.'; return false; }
       const val = marcada.value.toLowerCase();
-      const ok  = (q.vf ? val.toUpperCase() : val) === q.correta;
-      if(ok){
+      const ok = (q.vf ? val.toUpperCase() : val) === q.correta;
+      if (ok) {
         card.classList.add('ok-bg');
         status.classList.add('ok');
         status.textContent = '✔ Correto';
-      }else{
+      } else {
         card.classList.add('bad-bg');
         status.classList.add('bad');
-        if(q.vf){
+        if (q.vf) {
           status.textContent = `✖ Incorreto. Correto: ${q.correta}`;
-        }else{
-          const letras = ['a','b','c','d'];
+        } else {
+          const letras = ['a', 'b', 'c', 'd'];
           const idx = letras.indexOf(q.correta);
           const textoCorreto = q.alts[idx];
           status.textContent = `✖ Incorreto. Correto: (${q.correta}) ${textoCorreto}`;
@@ -283,49 +628,49 @@
       return ok;
     }
 
-    function verificarTudo(){
-      let withKey=0, correct=0;
-      for(const q of questoes){
+    function verificarTudo() {
+      let withKey = 0, correct = 0;
+      for (const q of questoes) {
         withKey++;
-        if(verificar(q.n)) correct++;
+        if (verificar(q.n)) correct++;
       }
       atualizarPlacar(correct, withKey);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function atualizarPlacar(forceCorrect, forceTotal){
+    function atualizarPlacar(forceCorrect, forceTotal) {
       let total = forceTotal ?? questoes.length;
       let correct = forceCorrect ?? Array.from(document.querySelectorAll('.status.ok')).length;
       document.getElementById('score').textContent = `Acertos: ${correct}/${total}`;
-      const ap = total ? Math.round((correct/total)*100) : 0;
+      const ap = total ? Math.round((correct / total) * 100) : 0;
       document.getElementById('aproveitamento').textContent = `Aproveitamento: ${ap}%`;
     }
 
-    function resetar(){
-      document.querySelectorAll('input[type="radio"]').forEach(i=>i.checked=false);
-      document.querySelectorAll('.alt').forEach(l=>l.classList.remove('sel'));
-      document.querySelectorAll('.q').forEach(c=>c.classList.remove('ok-bg','bad-bg'));
-      document.querySelectorAll('.status').forEach(s=>{ s.className='status'; s.textContent=''; });
+    function resetar() {
+      document.querySelectorAll('input[type="radio"]').forEach(i => i.checked = false);
+      document.querySelectorAll('.alt').forEach(l => l.classList.remove('sel'));
+      document.querySelectorAll('.q').forEach(c => c.classList.remove('ok-bg', 'bad-bg'));
+      document.querySelectorAll('.status').forEach(s => { s.className = 'status'; s.textContent = ''; });
       atualizarPlacar(0, questoes.length);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function exportCSV(){
-      const linhas = [["#","Enunciado","Resposta","Gabarito","Resultado"]];
-      for(const q of questoes){
+    function exportCSV() {
+      const linhas = [["#", "Enunciado", "Resposta", "Gabarito", "Resultado"]];
+      for (const q of questoes) {
         const card = document.getElementById(`q${q.n}`);
         const marcada = card.querySelector('input:checked');
         let resp = marcada ? marcada.value.toUpperCase() : '';
         let gab = q.vf ? q.correta : q.correta.toUpperCase();
         let resultado = card.querySelector('.status').classList.contains('ok') ? 'Correto' : (marcada ? 'Incorreto' : 'Não respondida');
-        linhas.push([q.n, q.enu.replaceAll('\n',' ').trim(), resp, gab, resultado]);
+        linhas.push([q.n, q.enu.replaceAll('\n', ' ').trim(), resp, gab, resultado]);
       }
-      const csv = linhas.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
-      const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+      const csv = linhas.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url; a.download = 'resultado_simulado_dh.csv'; a.click();
-      setTimeout(()=>URL.revokeObjectURL(url), 1500);
+      setTimeout(() => URL.revokeObjectURL(url), 1500);
     }
 
     // Render e binds iniciais
@@ -337,4 +682,5 @@
     document.getElementById('btnExport').addEventListener('click', exportCSV);
   </script>
 </body>
+
 </html>
