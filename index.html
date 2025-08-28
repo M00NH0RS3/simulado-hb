@@ -20,7 +20,6 @@
   }
 </script>
 
-  <title>Simulado – HB (100 questões)</title>
   <style>
     :root{
       --bg:#0f172a; --card:#0b1222f2; --muted:#94a3b8; --text:#e5e7eb; --accent:#38bdf8; --ok:#16a34a; --bad:#dc2626; --border:#334155;
@@ -59,7 +58,7 @@
 <body>
   <div class="container">
     <header>
-      <h1>📝 Simulado – PCIF (60 questões)</h1>
+      <h1>📝 Simulado – HB (100 questões)</h1>
       <div class="row">
         <span id="score" class="chip">Acertos: 0/0</span>
         <span id="aproveitamento" class="chip">Aproveitamento: 0%</span>
@@ -80,6 +79,7 @@
         <div class="row">
           <button id="btnReset" class="btn">Resetar</button>
           <button id="btnExport" class="btn">Exportar CSV</button>
+          <!-- <button class="btn primary" onclick="resumo.html">Resumo da Matéria</button> -->
         </div>
       </div>
       <div id="lista"></div>
@@ -207,11 +207,13 @@
         div.innerHTML = `
           <div class="q-head">
             <div class="q-title"><span class="chip">${q.n}</span> ${q.enu}</div>
-            // <button class="btn" data-action="verificar">Verificar</button>
+            
           </div>
           <div class="q-body" role="group" aria-label="Questão ${q.n}"></div>
           <div class="status"></div>
         `;
+
+        // <button class="btn" data-action="verificar">Verificar</button>
         const body = div.querySelector('.q-body');
         if(q.vf){
           ['V','F'].forEach(val=>{
